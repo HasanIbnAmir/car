@@ -1,0 +1,57 @@
+#include<Arduino.h>
+int m1p1 = 10;  // Motor forward pin
+int m1p2 = 9; // Motor backward pin
+int enA = 11;  // Enable pin (for speed control)
+int m2p1=8; // Motor forward pin
+int m2p2=7; // Motor backward pin
+int enB=6;  // Enable pin (for speed control)
+
+
+void setup() {
+    // Initialize motor control pins as output
+  pinMode(m1p1,OUTPUT);
+  pinMode(m1p2,OUTPUT);
+  pinMode(m2p1,OUTPUT);
+  pinMode(m2p2,OUTPUT);
+  pinMode(enA, OUTPUT);
+  pinMode(enB,OUTPUT);
+
+    // Set initial speed (PWM value between 0 and 255)
+  analogWrite(enA, 150); // Full speed
+  analogWrite(enB,150);
+}
+
+void loop() {
+  
+    // Move forward
+    digitalWrite(m1p1, HIGH); // Set in1 HIGH for forward direction
+    digitalWrite(m1p2, LOW);  // Set in2 LOW to prevent backward motion
+    digitalWrite(m2p1,HIGH);
+    digitalWrite(m2p2,LOW);
+    delay(5000);
+
+    // Move Right
+    digitalWrite(m1p1,HIGH);
+    digitalWrite(m1p2,LOW);
+    digitalWrite(m2p1,LOW);
+    digitalWrite(m2p2,HIGH); // 🔴
+    delay(500);
+    
+    //move Backward
+
+    digitalWrite(m1p1,LOW);
+    digitalWrite(m1p2,HIGH);
+    digitalWrite(m2p1,LOW);
+    digitalWrite(m2p2,HIGH);
+    delay(5000);
+    
+
+
+    //Move Left
+
+    digitalWrite(m1p1,LOW);
+    digitalWrite(m1p2,HIGH);// 🔴
+    digitalWrite(m2p1,HIGH);
+    digitalWrite(m2p2,LOW);
+    delay(2000);
+}
