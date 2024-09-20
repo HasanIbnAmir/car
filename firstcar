@@ -1,9 +1,9 @@
 #include<Arduino.h>
-int m1p1 = 10;  // Motor forward pin
-int m1p2 = 9; // Motor backward pin
+int m1p1 = 10;  // Motor1 forward pin
+int m1p2 = 9; // Motor1 backward pin
 int enA = 11;  // Enable pin (for speed control)
-int m2p1=8; // Motor forward pin
-int m2p2=7; // Motor backward pin
+int m2p1=8; // Motor2 forward pin
+int m2p2=7; // Motor2 backward pin
 int enB=6;  // Enable pin (for speed control)
 
 
