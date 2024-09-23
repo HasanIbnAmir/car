@@ -34,6 +34,12 @@ void loop(){
     else if(data=='l'){
         left();
     }
+    else if(data=='o'){
+      start();
+    }
+    else if (data=='s') {
+    stop();
+    }
 }
 
  void forward()
@@ -50,7 +56,9 @@ void loop(){
     m2.run(FORWARD);
     m3.run(BACKWARD);
     m4.run(BACKWARD);
-    // delay(1200); 
+    delay(2000);
+    stop(); 
+    forward();
 }
 
 void left(){
@@ -58,7 +66,9 @@ void left(){
     m4.run(FORWARD);
     m1.run(BACKWARD);
     m2.run(BACKWARD);
-    // delay(1200);
+    delay(2000);
+    stop();
+    forward();
 }
 
 void backwawrd()
@@ -67,7 +77,18 @@ void backwawrd()
     m2.run(BACKWARD);
     m3.run(BACKWARD);
     m4.run(BACKWARD);
-    // delay(5000);
     
+}
+void start(){
+    m1.setSpeed(100);
+    m2.setSpeed(100);
+    m3.setSpeed(100);
+    m4.setSpeed(100);
+}
 
+void stop(){
+    m1.run(RELEASE);
+    m2.run(RELEASE);
+    m3.run(RELEASE);
+    m4.run(RELEASE);
 }
