@@ -1,0 +1,73 @@
+#include<Arduino.h>
+#include<AFMotor.h>
+char data;
+AF_DCMotor m1(1);
+AF_DCMotor m2(2);
+AF_DCMotor m3(3);
+AF_DCMotor m4(4);
+
+void setup(){
+    Serial.begin(9600);
+    m1.setSpeed(100);
+    m2.setSpeed(100);
+    m3.setSpeed(100);
+    m4.setSpeed(100);
+}
+
+void loop(){
+
+    if (Serial.available() > 0) 
+    {
+    data = Serial.read();  
+    }
+    // Serial.print("Received via Bluetooth: ");}
+
+    if (data=='f'){
+        forward();
+        }
+    else if(data=='b'){
+        backwawrd();
+    }
+    else if(data=='r'){
+        right();
+    }
+    else if(data=='l'){
+        left();
+    }
+}
+
+ void forward()
+ {
+    m1.run(FORWARD);
+    m2.run(FORWARD);
+    m3.run(FORWARD);
+    m4.run(FORWARD);
+    // delay(4000);
+}
+    void right()
+{
+    m1.run(FORWARD);
+    m2.run(FORWARD);
+    m3.run(BACKWARD);
+    m4.run(BACKWARD);
+    // delay(1200); 
+}
+
+void left(){
+    m3.run(FORWARD);
+    m4.run(FORWARD);
+    m1.run(BACKWARD);
+    m2.run(BACKWARD);
+    // delay(1200);
+}
+
+void backwawrd()
+{
+    m1.run(BACKWARD);
+    m2.run(BACKWARD);
+    m3.run(BACKWARD);
+    m4.run(BACKWARD);
+    // delay(5000);
+    
+
+}
