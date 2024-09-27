@@ -1,0 +1,118 @@
+#include<Arduino.h>
+#include<NewPing.h>
+#include<Servo.h>
+#include <AFMotor.h>
+
+AF_DCMotor LeftMotor1(1);
+AF_DCMotor LeftMotor2(2);
+AF_DCMotor RightMotor3(3);
+AF_DCMotor RightMotor4(4);
+
+Servo srvo;
+#define trig A0
+#define echo A1
+#define max_d 200
+NewPing measure(trig,echo,max_d);
+#define threshold 20
+int srv_position;
+
+
+
+void setup(){
+  LeftMotor1.setSpeed(150);
+  LeftMotor2.setSpeed(150);
+  RightMotor3.setSpeed(150);
+  RightMotor4.setSpeed(150);
+  Serial.begin(9600);
+  srvo.attach(9);
+}
+
+int DISTANCE(int a){
+  srvo.write(a);
+  delay(500);
+  int d = measure.ping_cm();
+  return d;
+}
+
+
+void b_ward(){
+  LeftMotor1.run(FORWARD);
+  LeftMotor2.run(FORWARD);
+  RightMotor3.run(FORWARD);
+  RightMotor4.run(FORWARD);
+
+}
+
+void f_ward(){
+  LeftMotor1.run(BACKWARD);
+  LeftMotor2.run(BACKWARD);
+  RightMotor3.run(BACKWARD);
+  RightMotor4.run(BACKWARD);
+}
+
+void l_turn(){
+  LeftMotor1.run(BACKWARD);
+  LeftMotor2.run(BACKWARD);
+  RightMotor3.run(FORWARD);
+  RightMotor4.run(FORWARD);
+  delay(400);
+  stop();
+}
+
+void r_turn(){
+  LeftMotor1.run(FORWARD);
+  LeftMotor2.run(FORWARD);
+  RightMotor3.run(BACKWARD);
+  RightMotor4.run(BACKWARD);
+  delay(400);
+  stop();
+}
+
+void stop(){
+  LeftMotor1.run(RELEASE);
+  LeftMotor2.run(RELEASE);
+  RightMotor3.run(RELEASE);
+  RightMotor4.run(RELEASE);
+}
+
+void reverse(){
+  LeftMotor1.run(BACKWARD);
+  LeftMotor2.run(BACKWARD);
+  RightMotor3.run(BACKWARD);
+  RightMotor4.run(BACKWARD);
+  delay(500);
+  stop();
+}
+
+
+
+void loop(){
+  int distance1=measure.ping_cm();
+  Serial.println(distance1);
+  delay(50);
+
+  f_ward();
+
+  if (distance1>0 && distance1 <=threshold)
+  {
+    b_ward();
+    
+    int RightDistance = DISTANCE(0);
+    int LeftDistance = DISTANCE(180);
+    srvo.write(97);
+    
+    if(RightDistance>LeftDistance && RightDistance>threshold){
+      r_turn();
+    }
+    if (LeftDistance>RightDistance && LeftDistance>threshold)
+    {
+      l_turn();
+    }
+    else{
+      reverse();
+      
+    }
+  
+  }  
+}
+
